@@ -9,6 +9,7 @@ For the installation and usage process we are going to be using Morrighan. You c
 3. From the moment the Mabinogi Client is launched, and Morrighan is running, you can launch Nao Parse.exe, which you can grab the latest from [here](https://github.com/Iuke121/Nao-Parse/releases).  
   
 ## FAQ/Notes
+**This project is a work in progress and I worked on it for learning purposes**  
 If you launch Nao Parse.exe after your character has already the channel, you will need to Change Channel once, for the parser to be able to save your character name, as well as the name of the characters already around you.
 
 **I did everything right, but no damage is coming through**  
