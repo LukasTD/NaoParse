@@ -43,7 +43,6 @@ namespace NaoParse
 			encounterDataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 			encounterDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 			encounterDataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-			encounterDataGridView.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
 			encounterDataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 			encounterDataGridView.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 			encounterDataGridView.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -58,6 +57,12 @@ namespace NaoParse
 			encounterDataGridView.BackgroundColor = Color.FromArgb(72, 74, 84);
 			encounterDataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(72, 74, 84);
 			encounterDataGridView.EnableHeadersVisualStyles = false;
+
+			// don't allow user sorting, maybe revisit in the future.
+			foreach (DataGridViewColumn column in encounterDataGridView.Columns)
+			{
+				column.SortMode = DataGridViewColumnSortMode.NotSortable;
+			}
 
 			// other styles
 			menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
