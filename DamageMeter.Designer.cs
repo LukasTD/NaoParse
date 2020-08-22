@@ -49,6 +49,7 @@ namespace NaoParse
 			this.opacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			((System.ComponentModel.ISupportInitialize)(this.encounterDataGridView)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -197,6 +198,10 @@ namespace NaoParse
 			// 
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
+			// backgroundWorker1
+			// 
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			// 
 			// FrmDpsMeter
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,5 +240,6 @@ namespace NaoParse
 		private ToolStripMenuItem logToolStripMenuItem;
 		private ToolStripMenuItem exportToolStripMenuItem;
 		private Timer timer1;
+		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 	}
 }

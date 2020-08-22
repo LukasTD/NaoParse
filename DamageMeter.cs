@@ -11,13 +11,14 @@ using NaoParse.Util; // Pale
 using System.Data;
 using System.Runtime.InteropServices;
 using NaoParse.Parsing; // Pale
+using System.Threading;
 
 namespace NaoParse
 {
 	public partial class FrmDpsMeter : Form
 	{
 		private SortableBindingList<DamageMeterRow> AttackerList = new SortableBindingList<DamageMeterRow>();
-		public Dictionary<string, DamageCount> players = new Dictionary<string, DamageCount>();
+		private Dictionary<string, DamageCount> players = new Dictionary<string, DamageCount>();
 		private Stopwatch watch = new Stopwatch();
 		private float totalDamage;
 		private SafeDictionary<long, string> characters = new SafeDictionary<long, string>();
@@ -25,6 +26,7 @@ namespace NaoParse
 
 		// pale, source : https://github.com/exectails/MabiPale2
 		private IntPtr alissaHWnd;
+		private Queue<Msg> packetQueue;
 
 		public FrmDpsMeter()
 		{
@@ -83,6 +85,8 @@ namespace NaoParse
 			timer1.Enabled = true;
 			timer1.Interval = 250;
 
+			packetQueue = new Queue<Msg>();
+			backgroundWorker1.RunWorkerAsync();
 			// connects to alissa
 			Connect();
 		}
@@ -184,6 +188,40 @@ namespace NaoParse
 			encounterDataGridView.Sort(encounterDataGridView.Columns[2], ListSortDirection.Descending);
 		}
 
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+			while (true)
+			{
+				Thread.Sleep(250);
+
+				if (!WinApi.IsWindow(alissaHWnd))
+					Disconnect();
+
+				var count = packetQueue.Count;
+				if (count == 0)
+					continue;
+
+				var newPackets = new List<Msg>();
+				for (int i = 0; i < count; ++i)
+				{
+					Msg packet;
+					lock (packetQueue)
+						packet = packetQueue.Dequeue();
+
+					if (packet == null)
+						continue;
+
+					newPackets.Add(packet);
+				}
+
+				foreach (var packet in newPackets)
+				{
+					if (packet.Received)
+						onRecv(packet);
+				}
+			}
+		}
+
 		private void onRecv(Msg msg)
 		{
 			switch (msg.Op)
@@ -196,7 +234,7 @@ namespace NaoParse
 							var eid = msg.Packet.GetLong();
 							if (EntityId.IsCharacter(eid))
 							{
-								byte type = msg.Packet.GetByte();
+								msg.Packet.GetByte();
 								string name = msg.Packet.GetString();
 								characters.SafeSet(eid, name);
 							}
@@ -235,7 +273,7 @@ namespace NaoParse
 						for (var i = 0; i < count; i++)
 						{
 							var type = msg.Packet.GetShort();
-							var len = msg.Packet.GetInt();
+							msg.Packet.GetInt();
 							var data = msg.Packet.GetBin();
 							Packet subMsg = new Packet(data, 0);
 							var eid = subMsg.GetLong();
@@ -434,7 +472,10 @@ namespace NaoParse
 						return;
 					}
 
-					writeDamageLog(name, payload.Damage, SkillIdHelper.GetSkillName((ushort)payload.SkillId));
+					BeginInvoke((MethodInvoker)delegate
+					{
+						writeDamageLog(name, payload.Damage, SkillIdHelper.GetSkillName((ushort)payload.SkillId));
+					});
 				}
 			}
 		}
@@ -534,8 +575,8 @@ namespace NaoParse
 				var packet = new Packet(data, 0);
 				var msg = new Msg(packet, DateTime.Now, recv);
 
-				if (msg.Received)
-					onRecv(msg);
+				lock (packetQueue)
+					packetQueue.Enqueue(msg);
 			}
 			base.WndProc(ref m);
 		}
