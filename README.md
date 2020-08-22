@@ -10,7 +10,7 @@ For the installation and usage process we are going to be using Morrighan. You c
   
 ## FAQ/Notes
 **This project is a work in progress and I worked on it for learning purposes**  
-If you launch Nao Parse.exe after your character has already the channel, you will need to Change Channel once, for the parser to be able to save your character name, as well as the name of the characters already around you.
+If you launch Nao Parse.exe after your character has already entered a channel, you will need to Change Channel once, for the parser to be able to save your character name, as well as the name of the characters already around you.
 
 This can only parse damage your client actually perceives, so if the attacker and the target are out of your range, their damage will not be added. However, this range is a bit funky in Mabinogi in dungeons, as for example in Rabbie Phantasm, you still receive damage packets for the entire floor, despite being out of vision range. I have not tried this theory in other dungeons.
 
