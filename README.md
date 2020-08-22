@@ -19,7 +19,7 @@ I suggest launching Nao Parse as admin.
 Please create an Issue for it, preferrably with a description of what caused it(in game), and I will attempt to fix it.
 
 **How do I use this with a VPN or Ping Booster?**  
-You have to set the vpn/ping booster to Morrighan.exe instead of Client.exe.
+You have to set the vpn/ping booster to Morrighan.exe instead of Client.exe. (ExitLag doesn't support custom games, you can complain to them. Pingzapper does.)
 
 ## Screenshot of an early build
 ![early build image](https://i.imgur.com/WygQcPc.png)
