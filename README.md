@@ -22,3 +22,5 @@ You have to set the vpn/ping booster to Morrighan.exe instead of Client.exe.
 
 ## Screenshot of an early build
 ![early build image](https://i.imgur.com/WygQcPc.png)
+## Credits
+[Exec](https://github.com/exectails) for MabiPale2, which is where a lot on this project comes from.
