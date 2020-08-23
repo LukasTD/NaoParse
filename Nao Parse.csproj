@@ -7,7 +7,7 @@
     <ProjectGuid>{F322AFA4-02A9-4643-8A1C-BE94797D4B33}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>NaoParse</RootNamespace>
-    <AssemblyName>Nao Parse</AssemblyName>
+    <AssemblyName>NaoParse</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
