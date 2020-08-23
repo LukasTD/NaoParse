@@ -33,13 +33,13 @@ namespace NaoParse
 
 		public string Name { get; }
 
-		public string DamageSum {
+		public float DamageSum {
             get {
-                return String.Format("{0:n0}", damageCount.DamageSum);
+                return damageCount.DamageSum;
             }
         }
 
-        public string DamagePercent {
+        public float DamagePercent {
             get {
                 return damageCount.DamagePercent;
             }

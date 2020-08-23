@@ -7,8 +7,8 @@ namespace NaoParse
     {
         private float damageSum;
         private float highestDamage;
+        private float percent;
         private string skillId;
-        private string percent;
         // TODO record crit and calculate crit rate
         public event PropertyChangedEventHandler PropertyChanged;
         // event for encounter damage sum to update
@@ -56,7 +56,7 @@ namespace NaoParse
             }
         }
 
-        public string DamagePercent {
+        public float DamagePercent {
             get {
                 return percent;
             }

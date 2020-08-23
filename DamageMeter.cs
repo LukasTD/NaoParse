@@ -58,11 +58,13 @@ namespace NaoParse
 			encounterDataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(72, 74, 84);
 			encounterDataGridView.EnableHeadersVisualStyles = false;
 
-			// don't allow user sorting, maybe revisit in the future.
 			foreach (DataGridViewColumn column in encounterDataGridView.Columns)
 			{
 				column.SortMode = DataGridViewColumnSortMode.NotSortable;
 			}
+
+			encounterDataGridView.Columns[1].DefaultCellStyle.Format = "N0";
+			encounterDataGridView.Columns[2].DefaultCellStyle.Format = "P1";
 
 			// other styles
 			menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
@@ -167,7 +169,8 @@ namespace NaoParse
 				{
 					DamageSum = damage,
 					HighestDamage = damage,
-					SkillId = skillId
+					SkillId = skillId,
+					DamagePercent = (damage / totalDamage)
 				};
 				players.Add(attackerName, d);
 				var row = new DamageMeterRow(d, attackerName);
@@ -186,7 +189,7 @@ namespace NaoParse
 			// updating the damage % based on all players
 			foreach (var p in players)
 			{
-				p.Value.DamagePercent = (p.Value.DamageSum / totalDamage).ToString("P1", CultureInfo.CurrentCulture);
+				p.Value.DamagePercent = (p.Value.DamageSum / totalDamage);
 			}
 
 			// sorting the list as descending
