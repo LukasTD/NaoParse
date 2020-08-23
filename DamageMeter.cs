@@ -12,13 +12,13 @@ using System.Data;
 using System.Runtime.InteropServices;
 using NaoParse.Parsing; // Pale
 using System.Threading;
+using System.Reflection;
 
 namespace NaoParse
 {
 	public partial class FrmDpsMeter : Form
 	{
 		private SortableBindingList<DamageMeterRow> AttackerList = new SortableBindingList<DamageMeterRow>();
-		private Dictionary<string, DamageCount> players = new Dictionary<string, DamageCount>();
 		private Stopwatch watch = new Stopwatch();
 		private float totalDamage;
 		private SafeDictionary<long, string> characters = new SafeDictionary<long, string>();
@@ -26,7 +26,7 @@ namespace NaoParse
 
 		// pale, source : https://github.com/exectails/MabiPale2
 		private IntPtr alissaHWnd;
-		private Queue<Msg> packetQueue;
+		private Queue<Msg> packetQueue = new Queue<Msg>();
 
 		public FrmDpsMeter()
 		{
@@ -66,6 +66,11 @@ namespace NaoParse
 			encounterDataGridView.Columns[1].DefaultCellStyle.Format = "N0";
 			encounterDataGridView.Columns[2].DefaultCellStyle.Format = "P1";
 
+			// double buffering
+			typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic |
+			BindingFlags.Instance | BindingFlags.SetProperty, null,
+			encounterDataGridView, new object[] { true });
+
 			// other styles
 			menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
 			menuStrip1.BackColor = Color.FromArgb(65, 93, 137);
@@ -92,8 +97,8 @@ namespace NaoParse
 			timer1.Enabled = true;
 			timer1.Interval = 250;
 
-			packetQueue = new Queue<Msg>();
 			backgroundWorker1.RunWorkerAsync();
+
 			// connects to alissa
 			Connect();
 		}
@@ -101,9 +106,6 @@ namespace NaoParse
 		// timer tick
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			// total damage display
-			label2.Text = $"- {String.Format("{0:n0}", totalDamage)} DMG";
-
 			// updates time if stopwatch is running
 			if (watch.IsRunning)
 			{
@@ -135,7 +137,7 @@ namespace NaoParse
 		// copying log to cliboard
 		private void exportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var list = new BindingList<DamageMeterRow>(AttackerList.OrderByDescending(x => x.GetDamageCount().DamageSum).ToList());
+			var list = new BindingList<DamageMeterRow>(AttackerList.OrderByDescending(x => x.DamageSum).ToList());
 			var s = "";
 			foreach (var a in list)
 			{
@@ -147,53 +149,6 @@ namespace NaoParse
 				var result = "Name | Damage | % | Max Hit\n" + s;
 				Clipboard.SetText(result);
 			}
-		}
-
-		private void writeDamageLog(string attackerName, float damage, string skillId)
-		{
-			// if we got new combat data, and we clicked reset, reset the meter
-			if (!watch.IsRunning)
-			{
-				AttackerList.Clear();
-				players.Clear();
-				totalDamage = 0;
-				watch.Restart();
-			}
-
-			totalDamage += damage; // adding to the total damage of the parser
-
-			// if we don't have the player object in the dictionary
-			if (!players.ContainsKey(attackerName))
-			{
-				var d = new DamageCount
-				{
-					DamageSum = damage,
-					HighestDamage = damage,
-					SkillId = skillId,
-					DamagePercent = (damage / totalDamage)
-				};
-				players.Add(attackerName, d);
-				var row = new DamageMeterRow(d, attackerName);
-				AttackerList.Add(row);
-			}
-			else // existing player
-			{
-				players[attackerName].DamageSum += damage;
-				if (players[attackerName].HighestDamage < damage)
-				{
-					players[attackerName].HighestDamage = damage;
-					players[attackerName].SkillId = skillId;
-				}
-			}
-
-			// updating the damage % based on all players
-			foreach (var p in players)
-			{
-				p.Value.DamagePercent = (p.Value.DamageSum / totalDamage);
-			}
-
-			// sorting the list as descending
-			encounterDataGridView.Sort(encounterDataGridView.Columns[2], ListSortDirection.Descending);
 		}
 
 		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -298,6 +253,7 @@ namespace NaoParse
 						break;
 					}
 				case Op.CombatActionPack:
+					Console.Write("damage packet");
 					ProcessCombatPacket(msg);
 					break;
 			}
@@ -305,7 +261,6 @@ namespace NaoParse
 
 		private void ProcessCombatPacket(Msg msg)
 		{
-
 			int id = msg.Packet.GetInt();
 			if (packetIdSet.Contains(id))
 			{
@@ -480,12 +435,73 @@ namespace NaoParse
 						return;
 					}
 
-					BeginInvoke((MethodInvoker)delegate
+					var attacker = new DamageMeterRow
 					{
-						writeDamageLog(name, payload.Damage, SkillIdHelper.GetSkillName((ushort)payload.SkillId));
-					});
+						entityId = payload.Attacker,
+						Name = name,
+						DamageSum = payload.Damage,
+						skillId = SkillIdHelper.GetSkillName((ushort)payload.SkillId),
+					};
+
+					WriteDamageLog(attacker);
 				}
 			}
+		}
+
+		private void WriteDamageLog(DamageMeterRow a)
+		{
+			SortableBindingList<DamageMeterRow> updateList;
+			// if we got new combat data, and we clicked reset, reset the meter
+			if (!watch.IsRunning)
+			{
+				totalDamage = 0;
+				updateList = new SortableBindingList<DamageMeterRow>();
+				watch.Restart();
+			}
+			else
+				updateList = new SortableBindingList<DamageMeterRow>(AttackerList.ToList());
+
+			totalDamage += a.DamageSum; // adding to the total damage of the parser
+
+			bool found = false;
+			foreach (var attacker in updateList)
+			{
+				if (attacker.Name == a.Name)
+				{
+					found = true;
+					attacker.DamageSum += a.DamageSum;
+					if (attacker.highestDamage < a.DamageSum)
+					{
+						attacker.highestDamage = a.DamageSum;
+						attacker.skillId = a.skillId;
+					}
+				}
+				attacker.DamagePercent = attacker.DamageSum / totalDamage;
+			}
+
+			if (!found)
+			{
+				var row = new DamageMeterRow
+				{
+					Name = a.Name,
+					DamageSum = a.DamageSum,
+					highestDamage = a.DamageSum,
+					entityId = a.entityId,
+					skillId = a.skillId,
+					DamagePercent = a.DamageSum / totalDamage
+				};
+				updateList.Add(row);
+			}
+
+			// sorting the list as descending
+			AttackerList = new SortableBindingList<DamageMeterRow>(updateList.OrderByDescending(x => x.DamagePercent).ToList());
+
+			this.InvokeIfRequired((MethodInvoker)delegate
+			{
+				// total damage display
+				label2.Text = $"- {totalDamage:n0} DMG";
+				encounterDataGridView.DataSource = AttackerList;
+			});
 		}
 
 		#region Pale Code

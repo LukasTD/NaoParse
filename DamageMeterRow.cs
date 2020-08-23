@@ -1,59 +1,20 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace NaoParse
 {
-    public class DamageMeterRow : INotifyPropertyChanged
-    {
-        private DamageCount damageCount;
-
-		public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        private void ListenToDamageCountChange(DamageCount damageCount)
-        {
-            damageCount.PropertyChanged += new PropertyChangedEventHandler(DamageCountChangeHandler);
-        }
-        private void DamageCountChangeHandler(object o, PropertyChangedEventArgs e)
-        {
-            NotifyPropertyChanged();
-        }
-
-        public DamageMeterRow(DamageCount damageCount, string name)
-        {
-            this.damageCount = damageCount;
-            this.Name = name;
-
-            ListenToDamageCountChange(damageCount);
-        }
-
-		public string Name { get; }
-
-		public float DamageSum {
-            get {
-                return damageCount.DamageSum;
-            }
-        }
-
-        public float DamagePercent {
-            get {
-                return damageCount.DamagePercent;
-            }
-        }
-
-        public string MaxHit {
-            get {
-                return String.Format("{0:n0}", damageCount.HighestDamage)  + $" ({Regex.Replace(damageCount.SkillId.ToString(), "(?!^)([A-Z])", " $1")})";
-            }
-        }
-
-        public DamageCount GetDamageCount()
-        {
-            return damageCount;
-        }
-    }
+	public class DamageMeterRow
+	{
+		public long entityId;
+		public float highestDamage;
+		public string skillId;
+		public string Name { get; set; }
+		public float DamageSum { get; set; }
+		public float DamagePercent { get; set; }
+		public string MaxHit {
+			get {
+				return String.Format("{0:n0}", highestDamage) + $" ({Regex.Replace(skillId, "(?!^)([A-Z])", " $1")})";
+			}
+		}
+	}
 }

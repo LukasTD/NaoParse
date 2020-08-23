@@ -97,9 +97,9 @@ namespace NaoParse
 			this.label2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.Location = new System.Drawing.Point(72, 4);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(147, 17);
+			this.label2.Size = new System.Drawing.Size(65, 17);
 			this.label2.TabIndex = 2;
-			this.label2.Text = "- 100,000,000 DMG";
+			this.label2.Text = "- 0 DMG";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// resetBttn
@@ -122,9 +122,9 @@ namespace NaoParse
 			this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.Location = new System.Drawing.Point(3, 4);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(72, 17);
+			this.label1.Size = new System.Drawing.Size(77, 17);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "00:00:00";
+			this.label1.Text = "Waiting...";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// menuStrip1

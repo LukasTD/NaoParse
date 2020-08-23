@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DamageCount.cs" />
     <Compile Include="DamageMeter.cs">
       <SubType>Form</SubType>
     </Compile>
