@@ -139,7 +139,7 @@ namespace NaoParse
 			var s = "";
 			foreach (var a in list)
 			{
-				s += $"{a.Name} | {a.DamageSum} | {a.DamagePercent} | {a.MaxHit}\n";
+				s += $"{a.Name} | {a.DamageSum} | {a.DamagePercent.ToString("P1", CultureInfo.CurrentCulture)} | {a.MaxHit}\n";
 			}
 			if (s != "")
 			{
