@@ -25,8 +25,8 @@ namespace NaoParse
 		private HashSet<int> packetIdSet = new HashSet<int>();
 
 		// pale, source : https://github.com/exectails/MabiPale2
-		private IntPtr alissaHWnd;
-		private Queue<Msg> packetQueue = new Queue<Msg>();
+		public static Queue<Msg> packetQueue = new Queue<Msg>();
+		private Alissa invisWindow;
 
 		public FrmDpsMeter()
 		{
@@ -97,10 +97,21 @@ namespace NaoParse
 			timer1.Enabled = true;
 			timer1.Interval = 250;
 
-			backgroundWorker1.RunWorkerAsync();
+			// Creating an invisible message receiver window in a separate thread
+			Thread invisWindowThread = new Thread(new ThreadStart(() =>
+			{
+				invisWindow = new Alissa();
+				invisWindow.Show();
+				invisWindow.Visible = false;
+				System.Windows.Threading.Dispatcher.Run();
+			}));
 
-			// connects to alissa
-			Connect();
+			// Starting the thread
+			invisWindowThread.SetApartmentState(ApartmentState.STA);
+			invisWindowThread.IsBackground = true;
+			invisWindowThread.Start();
+
+			backgroundWorker1.RunWorkerAsync();
 		}
 
 		// timer tick
@@ -156,9 +167,6 @@ namespace NaoParse
 			while (true)
 			{
 				Thread.Sleep(250);
-
-				if (!WinApi.IsWindow(alissaHWnd))
-					Disconnect();
 
 				var count = packetQueue.Count;
 				if (count == 0)
@@ -504,119 +512,11 @@ namespace NaoParse
 			});
 		}
 
-		#region Pale Code
-		/// <summary>
-		/// Connects to the Alissa window.
-		/// </summary>
-		private void Connect()
-		{
-			if (alissaHWnd == IntPtr.Zero)
-			{
-				if (!SelectPacketProvider(true))
-					return;
-			}
-
-			if (!WinApi.IsWindow(alissaHWnd))
-			{
-				Console.WriteLine("Failed to connect, please make sure the selected packet provider is still running.");
-				alissaHWnd = IntPtr.Zero;
-				return;
-			}
-
-			SendAlissa(alissaHWnd, Sign.Connect);
-			Console.WriteLine("Connected successfully.");
-		}
-
-		/// <summary>
-		/// Tries to find a valid packet provider, asks the user to select one
-		/// if there are multiple windows.
-		/// </summary>
-		/// <param name="selectSingle">If true a single valid candidate will be selected without prompt.</param>
-		/// <returns></returns>
-		private bool SelectPacketProvider(bool selectSingle)
-		{
-			var alissaWindows = WinApi.FindAllWindows("mod_Alissa");
-			FoundWindow window = null;
-
-			if (alissaWindows.Count == 0)
-			{
-				Console.WriteLine("No packet provider found.");
-				return false;
-			}
-			else if (selectSingle && alissaWindows.Count == 1)
-			{
-				window = alissaWindows[0];
-			}
-			else
-			{
-				Console.WriteLine("More than one packet provider found.");
-			}
-
-			alissaHWnd = window.HWnd;
-
-			return true;
-		}
-
-		/// <summary>
-		/// Sends message to Alissa window.
-		/// </summary>
-		/// <param name="hWnd"></param>
-		/// <param name="op"></param>
-		private void SendAlissa(IntPtr hWnd, int op)
-		{
-			WinApi.COPYDATASTRUCT cds;
-			cds.dwData = (IntPtr)op;
-			cds.cbData = 0;
-			cds.lpData = IntPtr.Zero;
-
-			var cdsBuffer = Marshal.AllocHGlobal(Marshal.SizeOf(cds));
-			Marshal.StructureToPtr(cds, cdsBuffer, false);
-
-			this.InvokeIfRequired((MethodInvoker)delegate
-			{
-				WinApi.SendMessage(hWnd, WinApi.WM_COPYDATA, this.Handle, cdsBuffer);
-			});
-		}
-
-		/// <summary>
-		/// Window message handler, handles incoming data from Alissa.
-		/// </summary>
-		/// <param name="m"></param>
-		protected override void WndProc(ref Message m)
-		{
-			if (m.Msg == WinApi.WM_COPYDATA)
-			{
-				var cds = (WinApi.COPYDATASTRUCT)Marshal.PtrToStructure(m.LParam, typeof(WinApi.COPYDATASTRUCT));
-
-				if (cds.cbData < 12)
-					return;
-
-				var recv = (int)cds.dwData == Sign.Recv;
-
-				var data = new byte[cds.cbData];
-				Marshal.Copy(cds.lpData, data, 0, cds.cbData);
-
-				var packet = new Packet(data, 0);
-				var msg = new Msg(packet, DateTime.Now, recv);
-
-				lock (packetQueue)
-					packetQueue.Enqueue(msg);
-			}
-			base.WndProc(ref m);
-		}
-
-		// disconnets alissa when the program is closed
 		private void FrmDpsMeter_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			Disconnect();
-		}
-		private void Disconnect()
-		{
-			if (alissaHWnd != IntPtr.Zero)
-				SendAlissa(alissaHWnd, Sign.Disconnect);
+			invisWindow.Disconnect();
 		}
 	}
-	#endregion // pale, source : https://github.com/exectails/MabiPale2
 
 	#region MyColorTable
 	public class MyColorTable : ProfessionalColorTable
