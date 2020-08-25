@@ -130,6 +130,7 @@ namespace NaoParse.Parsing
         LanceCounter = 20016,
         LanceCharge = 20017,
         Bash = 20019,
+        FinalStrike = 20020,
         RangedAttack = 21001,
         MagnumShot = 21002,
         ArrowRevolver = 21003,
