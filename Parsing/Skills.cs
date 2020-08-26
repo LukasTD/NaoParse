@@ -641,6 +641,26 @@ namespace NaoParse.Parsing
         SuperWindmill = 65002,
         BlockWorldGMSkill = 65003,
         AdministrativePicking2 = 65006,
+
+        // New Ego Incarnate Skills (gfG24EgoWeapon)
+        NewEgoOHSwordIncarnate = 35111,
+        NewEgoOHBluntIncarnate = 35112,
+        NewEgoOHAxeIncarnate = 35113,
+        NewEgoTHSwordIncarnate = 35114,
+        NewEgoTHBluntIncarnate = 35115,
+        NewEgoTHAxeIncarnate = 35116,
+        NewEgoLanceIncarnate = 35117,
+        NewEgoAtlatlIncarnate = 35118,
+        NewEgoBowIncarnate = 35119,
+        NewEgoCrossbowIncarnate = 35120,
+        NewEgoWandIncarnate = 35121,
+        NewEgoStaffIncarnate = 35122,
+        NewEgoCylinderIncarnate = 35123,
+        NewEgoKnuckleIncarnate = 35124,
+        NewEgoHandleIncarnate = 35125,
+        NewEgoShurikenIncarnate = 35126,
+        NewEgoDualgunIncarnate = 35127,
+        NewEgoChainbladeIncarnate = 35128,
     }
 
     public static class SkillIdHelper
