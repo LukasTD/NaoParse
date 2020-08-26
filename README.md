@@ -7,7 +7,7 @@ For the installation and usage process we are going to be using Morrighan. You c
 
 1. Grab the latest Morrighan release [here](https://github.com/exectails/Morrighan/releases), and place it on your Mabinogi folder, usually `C:\Nexon\Library\mabinogi\appdata`.
 2. From here, you can choose the way you would like to launch the game with Morrighan. If you would like to use the nexon launcher, make a .bat in the same folder with `Morrighan.exe code:1622 verstr:248 ver:248 locale:USA env:Regular setting:file://data/features.xml logip:35.162.171.43 logport:11000 chatip:54.214.176.167 chatport:8002 nxlauncher` and use that. Otherwise, you can use anything that is able to edit the command line options to Client.exe. For example, if you wish to launch the game via [Kanan Launcher](https://github.com/cursey/kanan-new), all you would need to do click Customize Command Line, and set it to this `C:\Nexon\Library\mabinogi\appdata\Morrighan.exe code:1622 verstr:248 ver:248 locale:USA env:Regular setting:file://data/features.xml logip:35.162.171.43 logport:11000 chatip:54.214.176.167 chatport:8002`. Keep in mind of the folder path, if you have a different one.
-3. From the moment the Mabinogi Client is launched, and Morrighan is running, you can launch Nao Parse.exe, which you can grab the latest from [here](https://github.com/Iuke121/Nao-Parse/releases).  
+3. From the moment the Mabinogi Client is launched, and Morrighan is running, you can launch Nao Parse.exe.
   
 ## FAQ/Notes
 **This project is a work in progress and I worked on it for learning purposes**  
