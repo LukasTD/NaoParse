@@ -641,6 +641,26 @@ namespace NaoParse.Parsing
         SuperWindmill = 65002,
         BlockWorldGMSkill = 65003,
         AdministrativePicking2 = 65006,
+
+        // New Ego Awakening Ultimate Skills (gfG24EgoWeapon)
+        OneHandSwordUltimate = 35111,
+        OneHandBluntUltimate = 35112,
+        OneHandAxeUltimate = 35113,
+        TwoHandSwordUltimate = 35114,
+        TwoHandBluntUltimate = 35115,
+        TwoHandAxeUltimate = 35116,
+        LanceUltimate = 35117,
+        AtlatlUltimate = 35118,
+        BowUltimate = 35119,
+        CrossbowUltimate = 35120,
+        WandUltimate = 35121,
+        StaffUltimate = 35122,
+        CylinderUltimate = 35123,
+        KnuckleUltimate = 35124,
+        HandleUltimate = 35125,
+        ShurikenUltimate = 35126,
+        DualgunUltimate = 35127,
+        ChainbladeUltimate = 35128,
     }
 
     public static class SkillIdHelper
