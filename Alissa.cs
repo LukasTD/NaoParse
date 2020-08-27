@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NaoParse
+namespace NaoParse.AlissaWindow
 {
 	internal class Alissa : Form
 	{
@@ -27,7 +27,7 @@ namespace NaoParse
 			if (alissaHWnd == IntPtr.Zero)
 			{
 				if (!SelectPacketProvider(true))
-					return;
+					Application.Exit();
 			}
 
 			if (!WinApi.IsWindow(alissaHWnd))
@@ -63,7 +63,11 @@ namespace NaoParse
 			}
 			else
 			{
-				Console.WriteLine("More than one packet provider found.");
+				Console.WriteLine("Multiple packet providers.");
+				var select = new FrmAlissaSelect(alissaWindows);
+				if (select.ShowDialog() == DialogResult.Cancel)
+					return false;
+				window = FrmAlissaSelect.Selection;
 			}
 
 			alissaHWnd = window.HWnd;

@@ -7,10 +7,10 @@ using System.Globalization;
 using System.Linq;
 using System.Drawing;
 using Be.Timvw.Framework.ComponentModel;
-using NaoParse.Util; // Pale
+using NaoParse.Util;
 using System.Data;
-using System.Runtime.InteropServices;
-using NaoParse.Parsing; // Pale
+using NaoParse.AlissaWindow;
+using NaoParse.Parsing;
 using System.Threading;
 using System.Reflection;
 
@@ -514,7 +514,8 @@ namespace NaoParse
 
 		private void FrmDpsMeter_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			invisWindow.Disconnect();
+			if (invisWindow != null)
+				invisWindow.Disconnect();
 		}
 	}
 

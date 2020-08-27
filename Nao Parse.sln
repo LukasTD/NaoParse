@@ -5,6 +5,13 @@ VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nao Parse", "Nao Parse.csproj", "{F322AFA4-02A9-4643-8A1C-BE94797D4B33}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlissaWindow", "AlissaWindow", "{CAD06D17-69BE-4A1C-AEF9-B8F548069826}"
+	ProjectSection(SolutionItems) = preProject
+		Alissa.cs = Alissa.cs
+		FrmAlissaSelect.cs = FrmAlissaSelect.cs
+		FrmAlissaSelect.Designer.cs = FrmAlissaSelect.Designer.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
