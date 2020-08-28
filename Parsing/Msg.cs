@@ -28,7 +28,7 @@ namespace NaoParse.Parsing
 		/// Time at which the packet was sent/received
 		/// (MinValue if no data is available)
 		/// </summary>
-		public DateTime Time { get; private set; }
+		public DateTimeOffset Time { get; private set; }
 
 		/// <summary>
 		/// True if packet was received instead of sent.

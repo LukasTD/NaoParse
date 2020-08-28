@@ -50,6 +50,7 @@ namespace NaoParse
 			this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.pingIndicator = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.encounterDataGridView)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -202,11 +203,24 @@ namespace NaoParse
 			// 
 			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
 			// 
+			// pingIndicator
+			// 
+			this.pingIndicator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pingIndicator.AutoSize = true;
+			this.pingIndicator.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+			this.pingIndicator.Location = new System.Drawing.Point(337, 5);
+			this.pingIndicator.Name = "pingIndicator";
+			this.pingIndicator.Size = new System.Drawing.Size(42, 14);
+			this.pingIndicator.TabIndex = 3;
+			this.pingIndicator.Text = "Ping: ";
+			this.pingIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// FrmDpsMeter
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(403, 624);
+			this.Controls.Add(this.pingIndicator);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.encounterDataGridView);
 			this.Controls.Add(this.menuStrip1);
@@ -241,5 +255,6 @@ namespace NaoParse
 		private ToolStripMenuItem exportToolStripMenuItem;
 		private Timer timer1;
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
+		private Label pingIndicator;
 	}
 }

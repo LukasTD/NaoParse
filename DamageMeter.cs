@@ -23,6 +23,9 @@ namespace NaoParse
 		private float totalDamage;
 		private SafeDictionary<long, string> characters = new SafeDictionary<long, string>();
 		private HashSet<int> packetIdSet = new HashSet<int>();
+		private long runnerId;
+		private long petId;
+		private long pingStart;
 
 		// pale, source : https://github.com/exectails/MabiPale2
 		public static Queue<Msg> packetQueue = new Queue<Msg>();
@@ -72,6 +75,9 @@ namespace NaoParse
 			encounterDataGridView, new object[] { true });
 
 			// other styles
+			pingIndicator.BackColor = Color.FromArgb(65, 93, 137);
+			pingIndicator.ForeColor = Color.White;
+			pingIndicator.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Pixel);
 			menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
 			menuStrip1.BackColor = Color.FromArgb(65, 93, 137);
 			menuStrip1.ForeColor = Color.White;
@@ -189,7 +195,22 @@ namespace NaoParse
 				{
 					if (packet.Received)
 						onRecv(packet);
+					else
+						onSend(packet);
 				}
+			}
+		}
+		private void onSend(Msg msg)
+		{
+			if (msg.Op == Op.Run)
+			{
+				pingStart = msg.Time.ToUnixTimeMilliseconds();
+				runnerId = msg.Id;
+			}
+			else if (msg.Op == Op.FlyTo)
+			{
+				pingStart = msg.Time.ToUnixTimeMilliseconds();
+				runnerId = msg.Id;
 			}
 		}
 
@@ -263,6 +284,33 @@ namespace NaoParse
 				case Op.CombatActionPack:
 					Console.Write("damage packet");
 					ProcessCombatPacket(msg);
+					break;
+				case Op.Running:
+					if (msg.Id == runnerId || msg.Id == petId)
+					{
+						this.InvokeIfRequired((MethodInvoker)delegate
+						{
+							// ping update
+							pingIndicator.Text = "Ping: " + (msg.Time.ToUnixTimeMilliseconds() - pingStart).ToString();
+						});
+					}
+					break;
+				case Op.FlyingTo:
+					if (msg.Id == runnerId)
+					{
+						this.InvokeIfRequired((MethodInvoker)delegate
+						{
+							// ping update
+							pingIndicator.Text = "Ping: " + (msg.Time.ToUnixTimeMilliseconds() - pingStart).ToString();
+						});
+					}
+					break;
+				case Op.VehicleInfo:
+					if (msg.Id == runnerId)
+					{
+						msg.Packet.Skip(2);
+						petId = msg.Packet.GetLong();
+					}
 					break;
 			}
 		}
