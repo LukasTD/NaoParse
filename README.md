@@ -1,5 +1,5 @@
 # NaoParse
- Nao Parse is a small and simple damage parser that was written based on [MabiPale2](https://github.com/exectails/MabiPale2). To use this you need a proxy to intercept the packets sent to and from Mabinogi. I suggest using [Morrighan](https://github.com/exectails/Morrighan).
+ Nao Parse is a small and simple damage parser that was written based on [MabiPale2](https://github.com/exectails/MabiPale2). It also includes a handy small ping indicator on the top right! To use this you need a proxy to intercept the packets sent to and from Mabinogi. I suggest using [Morrighan](https://github.com/exectails/Morrighan).
 
 ## Installation and usage
 You can grab a release from the [releases](https://github.com/Iuke121/Nao-Parse/releases) page, or if you don't want to wait for a release to be pushed, you can grab the latest changes from [appveyor](https://ci.appveyor.com/project/Iuke121/naoparse/build/artifacts).
