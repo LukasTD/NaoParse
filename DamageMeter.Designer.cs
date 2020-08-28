@@ -8,34 +8,34 @@ using System.Windows.Forms.Design;
 
 namespace NaoParse
 {
-	partial class FrmDpsMeter
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class FrmDpsMeter
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDpsMeter));
             this.encounterDataGridView = new System.Windows.Forms.DataGridView();
@@ -49,10 +49,11 @@ namespace NaoParse
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trackBarMenuItem1 = new NaoParse.TrackBarMenuItem();
+            this.opacityIndicatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pingIndicator = new System.Windows.Forms.Label();
+            this.trackBarMenuItem1 = new NaoParse.TrackBarMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.encounterDataGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -177,20 +178,19 @@ namespace NaoParse
             // opacityToolStripMenuItem
             // 
             this.opacityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.trackBarMenuItem1});
+            this.trackBarMenuItem1,
+            this.opacityIndicatorToolStripMenuItem});
             this.opacityToolStripMenuItem.Name = "opacityToolStripMenuItem";
             this.opacityToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.opacityToolStripMenuItem.Text = "Opacity";
             // 
-            // trackBarMenuItem1
+            // opacityIndicatorToolStripMenuItem
             // 
-            this.trackBarMenuItem1.AutoSize = false;
-            this.trackBarMenuItem1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.trackBarMenuItem1.Name = "trackBarMenuItem1";
-            this.trackBarMenuItem1.Size = new System.Drawing.Size(104, 45);
-            this.trackBarMenuItem1.Text = "trackBarMenuItem1";
-            this.trackBarMenuItem1.Value = 100;
-            this.trackBarMenuItem1.Click += new System.EventHandler(this.trackBarMenuItem1_Click);
+            this.opacityIndicatorToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.opacityIndicatorToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.opacityIndicatorToolStripMenuItem.Name = "opacityIndicatorToolStripMenuItem";
+            this.opacityIndicatorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.opacityIndicatorToolStripMenuItem.Text = "100";
             // 
             // timer1
             // 
@@ -211,6 +211,16 @@ namespace NaoParse
             this.pingIndicator.TabIndex = 3;
             this.pingIndicator.Text = "Ping: ";
             this.pingIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // trackBarMenuItem1
+            // 
+            this.trackBarMenuItem1.AutoSize = false;
+            this.trackBarMenuItem1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.trackBarMenuItem1.Name = "trackBarMenuItem1";
+            this.trackBarMenuItem1.Size = new System.Drawing.Size(104, 45);
+            this.trackBarMenuItem1.Text = "opacityTrackbarSlider";
+            this.trackBarMenuItem1.Value = 100;
+            this.trackBarMenuItem1.Click += new System.EventHandler(this.trackBarMenuItem1_Click);
             // 
             // FrmDpsMeter
             // 
@@ -234,36 +244,37 @@ namespace NaoParse
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.DataGridView encounterDataGridView;
-		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button resetBttn;
-		private System.Windows.Forms.Label label2;
-		private MenuStrip menuStrip1;
-		private ToolStripMenuItem windowToolStripMenuItem;
-		private ToolStripMenuItem alwaysOnTopToolStripMenuItem;
-		private ToolStripMenuItem opacityToolStripMenuItem;
-		private ToolStripMenuItem logToolStripMenuItem;
-		private ToolStripMenuItem exportToolStripMenuItem;
-		private Timer timer1;
-		private System.ComponentModel.BackgroundWorker backgroundWorker1;
-		private Label pingIndicator;
+        private System.Windows.Forms.DataGridView encounterDataGridView;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button resetBttn;
+        private System.Windows.Forms.Label label2;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem windowToolStripMenuItem;
+        private ToolStripMenuItem alwaysOnTopToolStripMenuItem;
+        private ToolStripMenuItem opacityToolStripMenuItem;
+        private ToolStripMenuItem logToolStripMenuItem;
+        private ToolStripMenuItem exportToolStripMenuItem;
+        private Timer timer1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private Label pingIndicator;
         private TrackBarMenuItem trackBarMenuItem1;
+        private ToolStripMenuItem opacityIndicatorToolStripMenuItem;
     }
 
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.MenuStrip |
-								   ToolStripItemDesignerAvailability.ContextMenuStrip)]
-	public class TrackBarMenuItem : ToolStripControlHost
-	{
-		private TrackBar trackBar;
+                                   ToolStripItemDesignerAvailability.ContextMenuStrip)]
+    public class TrackBarMenuItem : ToolStripControlHost
+    {
+        private TrackBar trackBar;
 
         public TrackBarMenuItem() : base(new TrackBar())
-		{
-			this.trackBar = this.Control as TrackBar;
+        {
+            this.trackBar = this.Control as TrackBar;
             trackBar.TickFrequency = 1;
             trackBar.TickStyle = 0;
             trackBar.Maximum = 100;

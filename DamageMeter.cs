@@ -146,6 +146,7 @@ namespace NaoParse
 		private void trackBarMenuItem1_Click(object sender, EventArgs e)
 		{
 			this.Opacity = (double)trackBarMenuItem1.Value / 100;
+			opacityIndicatorToolStripMenuItem.Text = trackBarMenuItem1.Value.ToString();
 		}
 
 		// copying log to cliboard
