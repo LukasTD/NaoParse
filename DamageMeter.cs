@@ -90,6 +90,8 @@ namespace NaoParse
 			alwaysOnTopToolStripMenuItem.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Pixel);
 
 			trackBarMenuItem1.trackBar.Scroll += TrackBar_Scroll;
+			trackBarMenuItem1.trackBar.AutoSize = false;
+			trackBarMenuItem1.trackBar.Height = 20;
 			opacityToolStripMenuItem.BackColor = Color.FromArgb(65, 93, 137);
 			opacityToolStripMenuItem.ForeColor = Color.White;
 			opacityToolStripMenuItem.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Pixel);
