@@ -97,9 +97,6 @@ namespace NaoParse
 			exportToolStripMenuItem.ForeColor = Color.White;
 			exportToolStripMenuItem.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Pixel);
 
-			Opacity = this.Opacity = (100 - 0) / (double)100;
-			toolStripComboBox1.Text = (100 - (Opacity * 100)).ToString();
-
 			timer1.Enabled = true;
 			timer1.Interval = 250;
 
@@ -146,9 +143,10 @@ namespace NaoParse
 		}
 
 		// changing opacity
-		private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		private void trackBarMenuItem1_Click(object sender, EventArgs e)
 		{
-			Opacity = (100 - int.Parse(toolStripComboBox1.SelectedItem.ToString())) / (double)100;
+			this.Opacity = (double)trackBarMenuItem1.Value / 100;
+			opacityIndicatorToolStripMenuItem.Text = trackBarMenuItem1.Value.ToString();
 		}
 
 		// copying log to cliboard
@@ -565,10 +563,10 @@ namespace NaoParse
 			if (invisWindow != null)
 				invisWindow.Disconnect();
 		}
-	}
+    }
 
-	#region MyColorTable
-	public class MyColorTable : ProfessionalColorTable
+    #region MyColorTable
+    public class MyColorTable : ProfessionalColorTable
 	{
 		public override Color ToolStripDropDownBackground {
 			get {
