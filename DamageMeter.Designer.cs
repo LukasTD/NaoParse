@@ -220,7 +220,6 @@ namespace NaoParse
             this.trackBarMenuItem1.Size = new System.Drawing.Size(104, 45);
             this.trackBarMenuItem1.Text = "opacityTrackbarSlider";
             this.trackBarMenuItem1.Value = 100;
-            this.trackBarMenuItem1.Click += new System.EventHandler(this.trackBarMenuItem1_Click);
             // 
             // FrmDpsMeter
             // 
@@ -270,7 +269,7 @@ namespace NaoParse
                                    ToolStripItemDesignerAvailability.ContextMenuStrip)]
     public class TrackBarMenuItem : ToolStripControlHost
     {
-        private TrackBar trackBar;
+        public TrackBar trackBar;
 
         public TrackBarMenuItem() : base(new TrackBar())
         {
