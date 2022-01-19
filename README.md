@@ -1,3 +1,6 @@
+# Important Update
+  So, I'm quite late to put this up since I haven't played Mabinogi in years but I have received word that players were banned for the use of Morrighan, the packet reader mentioned below. So, if you're thinking of using NaoParse, don't use Morrighan. Which means you would have to have acess to something else that used Alissa. I'm unfamiliar with any public alternatives unfortunately, I wish you the best of luck! 
+
 # NaoParse
  Nao Parse is a small and simple damage parser that was written based on [MabiPale2](https://github.com/exectails/MabiPale2). It also includes a handy small ping indicator on the top right! To use this you need a proxy to intercept the packets sent to and from Mabinogi. I suggest using [Morrighan](https://github.com/exectails/Morrighan).
 
