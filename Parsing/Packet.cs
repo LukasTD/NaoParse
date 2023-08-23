@@ -411,8 +411,8 @@ namespace NaoParse.Parsing
 				throw new ArgumentException("Expected Bin, got " + this.Peek() + ".");
 
 			_ptr += 1;
-			var len = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(_buffer, _ptr));
-			_ptr += 2;
+            var len = unchecked((ushort)IPAddress.NetworkToHostOrder(BitConverter.ToInt16(_buffer, _ptr)));
+            _ptr += 2;
 
 			var val = new byte[len];
 			Buffer.BlockCopy(_buffer, _ptr, val, 0, len);
